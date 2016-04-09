@@ -23,7 +23,7 @@ if (process.platform === 'darwin') {
  * @param {number|null} speed Speed of text (e.g. 1.0 for normal, 0.5 half, 2.0 double)
  * @param {Function|null} callback A callback of type function(err) to return.
  */
-say.speak = function(text, voice, speed, callback) {
+say.speak = function(text, voice, speed, callback, device) {
   var commands, pipedData;
 
   if (typeof callback !== 'function') {
@@ -50,8 +50,14 @@ say.speak = function(text, voice, speed, callback) {
     commands = ['--pipe'];
 
     if (speed) {
-      pipedData = '(Parameter.set \'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $(($SR*' + convertSpeed(speed) + '/100)) $FILE") ';
+      pipedData = '(Parameter.set \'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $(($SR*' + convertSpeed(speed) + '/100)) $FILE';
     }
+
+    if (device) {
+      pipedData += ' -D ' + device;
+    }
+
+    pipedData += '") ';
 
     if (voice) {
       pipedData += '(' + voice + ') ';
