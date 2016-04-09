@@ -64,6 +64,8 @@ say.speak = function(text, voice, speed, callback, device) {
     }
 
     pipedData += '(SayText \"' + text + '\")';
+
+    console.log(pipedData);
   } else if (process.platform === 'win32') {
     commands = [ '/s /c "' + path.join(__dirname, 'say.vbs') + ' ' + JSON.stringify(text) + '"' ];
   } else {
