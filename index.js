@@ -50,14 +50,14 @@ say.speak = function(text, voice, speed, callback, device) {
     commands = ['--pipe'];
 
     if (speed) {
-      pipedData = '(Parameter.set \'Audio_Command "aplay -q -c 1 -t raw -f s16 -r $(($SR*' + convertSpeed(speed) + '/100)) $FILE';
-    }
+      pipedData = '(Parameter.set \'Audio_Command "aplay';
 
-    if (device) {
-      pipedData += ' -D ' + device;
-    }
+      if (device) {
+        pipedData += ' -D ' + device;
+      }
 
-    pipedData += '") ';
+      pipedData += ' -q -c 1 -t raw -f s16 -r $(($SR*' + convertSpeed(speed) + '/100)) $FILE") ';
+    }
 
     if (voice) {
       pipedData += '(' + voice + ') ';
